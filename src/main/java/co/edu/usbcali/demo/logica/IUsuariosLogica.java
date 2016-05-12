@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.edu.usbcali.demo.modelo.Usuarios;
 
-public interface IUsuarioLogica {
+public interface IUsuariosLogica {
 
 	public void grabar(Usuarios usuarios) throws Exception;
 	public void modificar(Usuarios usuarios) throws Exception;

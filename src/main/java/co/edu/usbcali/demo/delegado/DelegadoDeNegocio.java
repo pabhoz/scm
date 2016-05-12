@@ -67,7 +67,7 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 
 	@Override
 	public TiposDocumentos consultarTipoDocumentoId(long tdocCodigo) throws Exception {
-		return tiposDocumentosLogica.consultarTipoDocumentoId(tdocCodigo);
+		return tiposDocumentosLogica.consultarPorId(tdocCodigo);
 	}
 
 	@Override

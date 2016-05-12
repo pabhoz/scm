@@ -14,64 +14,63 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.usbcali.demo.dao.ITipoDocumentosDAO;
-import co.edu.usbcali.demo.modelo.TiposDocumentos;
-
+import co.edu.usbcali.demo.dao.ITipoUsuariosDAO;
+import co.edu.usbcali.demo.modelo.TiposUsuarios;
 
 @Service
 @Scope("singleton")
-public class TiposDocumentosLogica implements ITiposDocumentosLogica {
-
-private static final Logger log = LoggerFactory.getLogger(TiposUsuariosLogica.class);
+public class TiposUsuariosLogica implements ITiposUsuariosLogica {
+	
+	private static final Logger log = LoggerFactory.getLogger(TiposUsuariosLogica.class);
 	
 	@Autowired
 	private Validator validator;
 	
 	@Autowired
-	private ITipoDocumentosDAO tipoDocumentoDAO;
+	private ITipoUsuariosDAO tipoUsuarioDAO;
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void grabar(TiposDocumentos tiposDocumentos) throws Exception {
-		validar(tiposDocumentos);
+	public void grabar(TiposUsuarios tiposUsuarios) throws Exception {
+		validar(tiposUsuarios);
 		
-		tipoDocumentoDAO.grabar(tiposDocumentos);
+		tipoUsuarioDAO.grabar(tiposUsuarios);
 	}
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void modificar(TiposDocumentos tiposDocumentos) throws Exception {
-		validar(tiposDocumentos);
+	public void modificar(TiposUsuarios tiposUsuarios) throws Exception {
+		validar(tiposUsuarios);
 		
-		tipoDocumentoDAO.modificar(tiposDocumentos);
+		tipoUsuarioDAO.modificar(tiposUsuarios);
 	}
 
 	@Override
 	@Transactional(readOnly=false, propagation=Propagation.REQUIRED, rollbackFor=Exception.class)
-	public void borrar(TiposDocumentos tiposDocumentos) throws Exception {
-		validar(tiposDocumentos);
+	public void borrar(TiposUsuarios tiposUsuarios) throws Exception {
+		validar(tiposUsuarios);
 		
-		tipoDocumentoDAO.borrar(tiposDocumentos);
+		tipoUsuarioDAO.borrar(tiposUsuarios);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public TiposDocumentos consultarPorId(Long id) throws Exception {
-		return tipoDocumentoDAO.consultarPorId(id);
+	public TiposUsuarios consultarPorId(Long id) throws Exception {
+		return tipoUsuarioDAO.consultarPorId(id);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<TiposDocumentos> consultarTodos() throws Exception {
-		return tipoDocumentoDAO.consultarTodos();
+	public List<TiposUsuarios> consultarTodos() throws Exception {
+		return tipoUsuarioDAO.consultarTodos();
 	}
 	
-	private void validar(TiposDocumentos entity) throws Exception {
+	private void validar(TiposUsuarios entity) throws Exception {
 		StringBuilder stringBuilder = new StringBuilder();
 		
-		Set<ConstraintViolation<TiposDocumentos>> constraintViolations = validator.validate(entity);
+		Set<ConstraintViolation<TiposUsuarios>> constraintViolations = validator.validate(entity);
 		if (constraintViolations.size() > 0) {
-			for (ConstraintViolation<TiposDocumentos> constraintViolation : constraintViolations) {
+			for (ConstraintViolation<TiposUsuarios> constraintViolation : constraintViolations) {
 				log.error(constraintViolation.getPropertyPath().toString());
 				log.error(constraintViolation.getMessage());
 				stringBuilder.append(constraintViolation.getPropertyPath().toString());
@@ -82,7 +81,5 @@ private static final Logger log = LoggerFactory.getLogger(TiposUsuariosLogica.cl
 			throw new Exception(stringBuilder.toString()); 
 		}
 	}
-
-	
 
 }

@@ -33,6 +33,7 @@ public class RetirosId implements java.io.Serializable {
 		this.cueNumero = cueNumero;
 	}
 
+	@Override
 	public boolean equals(Object other) {
 		if ((this == other))
 			return true;
@@ -47,6 +48,7 @@ public class RetirosId implements java.io.Serializable {
 						&& castOther.getCueNumero() != null && this.getCueNumero().equals(castOther.getCueNumero())));
 	}
 
+	@Override
 	public int hashCode() {
 		int result = 17;
 

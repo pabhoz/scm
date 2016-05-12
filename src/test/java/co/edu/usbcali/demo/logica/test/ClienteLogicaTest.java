@@ -15,11 +15,9 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import co.edu.usbcali.demo.dao.IClientesDAO;
 import co.edu.usbcali.demo.dao.ITipoDocumentosDAO;
 import co.edu.usbcali.demo.logica.IClienteLogica;
 import co.edu.usbcali.demo.modelo.Clientes;
-import co.edu.usbcali.demo.modelo.TiposDocumentos;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
@@ -65,7 +63,7 @@ public class ClienteLogicaTest {
 	public void cTest() throws Exception {
 		Clientes clientes = clienteLogica.consultarPorId(cliId);
 		assertNotNull("El cliente no existe", clientes);
-		clientes.setCliNombre("HERE WE ARE!");
+		clientes.setCliNombre("Modified Client Name");
 		clienteLogica.modificar(clientes);
 	}
 	

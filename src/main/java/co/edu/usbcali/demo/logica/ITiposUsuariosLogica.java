@@ -4,7 +4,7 @@ import java.util.List;
 
 import co.edu.usbcali.demo.modelo.TiposUsuarios;
 
-public interface ITipoUsuarioLogica {
+public interface ITiposUsuariosLogica {
 	
 	public void grabar(TiposUsuarios tiposUsuarios) throws Exception;
 	public void modificar(TiposUsuarios tiposUsuarios) throws Exception;

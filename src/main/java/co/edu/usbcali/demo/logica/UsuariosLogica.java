@@ -21,9 +21,9 @@ import co.edu.usbcali.demo.modelo.TiposUsuarios;
 
 @Service
 @Scope("singleton")
-public class UsuarioLogica implements IUsuarioLogica{
+public class UsuariosLogica implements IUsuariosLogica{
 
-private static final Logger log = LoggerFactory.getLogger(UsuarioLogica.class);
+private static final Logger log = LoggerFactory.getLogger(UsuariosLogica.class);
 	
 	@Autowired
 	private IUsuariosDAO usuarioDAO;
