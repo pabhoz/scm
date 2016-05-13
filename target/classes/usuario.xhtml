@@ -3,30 +3,72 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:head>
+<h:head>
 
-	</h:head>
-	
-	<h:body>
-	
-		<h:form>
-			<p:growl id="msg"/>
-			<p:panel header="Formulario de Usuario" id="pnlFormularioUsuario">
-				<h:panelGrid columns="2" border="0">
-					<p:outputLabel value="Id" />
-					<p:inputText id="txtIdentificacion" binding="#{usuarioVista.txtIdentificacion}">
-						<p:ajax listener="#{usuarioVista.txtIdentificacionListener}" update="pnlFormularioUsuario" />
-					</p:inputText>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:growl id="msg" />
+		<p:panel header="Formulario de Usuario" id="pnlFormularioUsuario">
+			<h:panelGrid columns="2" border="0">
+				<p:outputLabel value="Cedula" />
+				<p:inputText id="txtIdentificacion"
+					binding="#{usuarioVista.txtIdentificacion}">
+					<p:ajax listener="#{usuarioVista.txtIdentificacionListener}"
+						update="pnlFormularioUsuario" />
+				</p:inputText>
+
+				<p:outputLabel value="Tipo Usuario" />
+				<p:selectOneMenu id="somTipoUsuario"
+					binding="#{usuarioVista.somTiposUsuarios}">
+					<f:selectItem itemValue="-1" itemLabel="-SELECCIONE-" />
+					<f:selectItems value="#{usuarioVista.losTiposUsuariosItems}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Nombre" />
+				<p:inputText id="txtNombre" binding="#{usuarioVista.txtNombre}" />
 				
+				<p:outputLabel value="Login" />
+				<p:inputText id="txtLogin" binding="#{usuarioVista.txtLogin}" />
 				
-				</h:panelGrid>
-				<h:panelGrid columns="4" border="0">
-					<p:commandButton id="btnCrear" value="Crear" 			update="msg" binding="#{usuarioVista.btnCrear}" 	disabled="true" 	action="#{usuarioVista.crearAction}"/>
-					<p:commandButton id="btnModificar" value="Modificar"	update="msg" binding="#{usuarioVista.btnModificar}" disabled="true" 	action="#{usuarioVista.modificarAction}"/>
-					<p:commandButton id="btnBorrar" value="Borrar"  		update="msg" binding="#{usuarioVista.btnBorrar}" 	disabled="true" 	action="#{usuarioVista.borrarAction}"/>
-					<p:commandButton id="btnLimpiar" value="Limpiar"		update="pnlFormularioUsuario" binding="#{usuarioVista.btnLimpiar}" 	disabled="false" 	action="#{usuarioVista.limpiarAction}"/>
-				</h:panelGrid>				
-			</p:panel>
-		</h:form>
-	</h:body>
+				<p:outputLabel value="Clave" />
+				<p:inputText id="txtClave" binding="#{usuarioVista.txtClave}" />
+
+
+			</h:panelGrid>
+			<h:panelGrid columns="4" border="0">
+				<p:commandButton id="btnCrear" value="Crear" update="msg,pnlTodosLosUsuarios"
+					binding="#{usuarioVista.btnCrear}" disabled="true"
+					action="#{usuarioVista.crearAction}" />
+				<p:commandButton id="btnModificar" value="Modificar" update="msg"
+					binding="#{usuarioVista.btnModificar}" disabled="true"
+					action="#{usuarioVista.modificarAction}" />
+				<p:commandButton id="btnBorrar" value="Borrar" update="msg"
+					binding="#{usuarioVista.btnBorrar}" disabled="true"
+					action="#{usuarioVista.borrarAction}" />
+				<p:commandButton id="btnLimpiar" value="Limpiar"
+					update="pnlFormularioUsuario" binding="#{usuarioVista.btnLimpiar}"
+					disabled="false" action="#{usuarioVista.limpiarAction}" />
+			</h:panelGrid>
+		</p:panel>
+		<p:panel header="Usuarios" id="pnlTodosLosUsuarios">
+			<p:dataTable var="usuario" value="#{usuarioVista.losUsuarios}"
+				paginator="true" rows="5"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20">
+				<p:column headerText="Cedula" filterBy="#{usuario.usuCedula}">
+					<p:outputLabel value="#{usuario.usuCedula}" />
+				</p:column>
+				<p:column headerText="Nombre" filterBy="#{usuario.usuNombre}">
+					<p:outputLabel value="#{usuario.usuNombre}" />
+				</p:column>
+				<p:column headerText="Login" filterBy="#{usuario.usuLogin}">
+					<p:outputLabel value="#{usuario.usuLogin}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
 </html>

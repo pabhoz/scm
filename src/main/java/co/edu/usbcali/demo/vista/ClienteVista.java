@@ -61,6 +61,15 @@ public class ClienteVista {
 			
 			delegadoDeNegocio.grabarClientes(clientes);
 			
+			try {
+				losClientes = delegadoDeNegocio.consultarTodosClientes();
+				this.setLosClientes(losClientes);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			this.limpiarAction();
+			
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "El cliente se creo con exito", ""));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
@@ -112,7 +121,7 @@ public class ClienteVista {
 		txtIdentificacion.resetValue();
 		
 		btnBorrar.setDisabled(true);
-		btnCrear.setDisabled(false);
+		btnCrear.setDisabled(true);
 		btnModificar.setDisabled(true);
 		return "";
 	}

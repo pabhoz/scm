@@ -84,4 +84,13 @@ private static final Logger log = LoggerFactory.getLogger(UsuariosDAOTest.class)
 			log.info(usuarios.getUsuNombre() + " - " + usuarios.getUsuLogin());
 		}
 	}
+	
+	@Test
+	@Transactional(readOnly=true)
+	public void fTest() throws Exception {
+		List<Usuarios> losUsuarios = usuarioDAO.consultarUsuariosPorTiposUsuarios(10L);
+		for (Usuarios usuarios : losUsuarios) {
+			log.info(usuarios.getUsuNombre() + " - " + usuarios.getUsuLogin());
+		}
+	}
 }

@@ -11,5 +11,6 @@ public interface IUsuariosDAO {
 	public void borrar(Usuarios usuarios);
 	public Usuarios consultarPorId(long id);
 	public List<Usuarios> consultarTodos();
+	List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo);
 	
 }

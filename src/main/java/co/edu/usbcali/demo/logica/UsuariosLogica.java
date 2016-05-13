@@ -119,7 +119,7 @@ private static final Logger log = LoggerFactory.getLogger(UsuariosLogica.class);
 			throw new Exception("El usuario que desea eliminar no existe");
 		}
 		
-		usuarioDAO.borrar(usuarios);
+		usuarioDAO.borrar(entity);
 	}
 
 	@Override
@@ -134,4 +134,9 @@ private static final Logger log = LoggerFactory.getLogger(UsuariosLogica.class);
 		return usuarioDAO.consultarTodos();
 	}	
 	
+	@Override
+	@Transactional(readOnly=true)
+	public List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception {
+		return usuarioDAO.consultarUsuariosPorTiposUsuarios(tusuCodigo);
+	}
 }

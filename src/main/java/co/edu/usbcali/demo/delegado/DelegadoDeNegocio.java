@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import co.edu.usbcali.demo.logica.IClienteLogica;
 import co.edu.usbcali.demo.logica.IConsignacionesLogica;
@@ -241,6 +242,11 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	@Override
 	public List<Usuarios> consultarTodosUsuarios() throws Exception {
 		return usuariosLogica.consultarTodos();
+	}
+	
+	@Override
+	public List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception {
+		return usuariosLogica.consultarUsuariosPorTiposUsuarios(tusuCodigo);
 	}
 
 }

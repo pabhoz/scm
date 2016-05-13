@@ -19,143 +19,220 @@ import org.slf4j.LoggerFactory;
 import co.edu.usbcali.demo.delegado.IDelegadoDeNegocio;
 import co.edu.usbcali.demo.modelo.Clientes;
 import co.edu.usbcali.demo.modelo.TiposDocumentos;
+import co.edu.usbcali.demo.modelo.TiposUsuarios;
 import co.edu.usbcali.demo.modelo.Usuarios;
 
 @ViewScoped
 @ManagedBean
 public class UsuarioVista {
-	
-	private final static Logger log=LoggerFactory.getLogger(UsuarioVista.class);
-	
-	@ManagedProperty(value="#{delegadoDeNegocio}")
+
+	private final static Logger log = LoggerFactory.getLogger(UsuarioVista.class);
+
+	@ManagedProperty(value = "#{delegadoDeNegocio}")
 	private IDelegadoDeNegocio delegadoDeNegocio;
-	
+
 	private List<Usuarios> losUsuarios;
-	
+
 	private List<SelectItem> losTiposUsuariosItems;
-	
+
 	private InputText txtIdentificacion;
+	private InputText txtCodigo;
 	private InputText txtNombre;
-	private InputText txtDireccion;
-	private InputText txtTelefono;
-	private InputText txtMail;
-	
-	private SelectOneMenu somTipoDocumento;
-	
+	private InputText txtLogin;
+	private InputText txtClave;
+
+	private SelectOneMenu somTiposUsuarios;
+
 	private CommandButton btnCrear;
 	private CommandButton btnModificar;
 	private CommandButton btnBorrar;
 	private CommandButton btnLimpiar;
-	
-	public String crearAction(){
+
+	public String crearAction() {
 		log.info("Ingreso a crear");
-		
+
 		try {
-			Clientes clientes=new Clientes();
-			clientes.setCliDireccion(txtDireccion.getValue().toString().trim());
-			clientes.setCliId(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
-			clientes.setCliMail(txtMail.getValue().toString().trim());
-			clientes.setCliNombre(txtNombre.getValue().toString().trim());
-			clientes.setCliTelefono(txtTelefono.getValue().toString().trim());
-			TiposDocumentos tiposDocumentos=delegadoDeNegocio.consultarTipoDocumentoId(Long.parseLong(somTipoDocumento.getValue().toString()));
-			clientes.setTiposDocumentos(tiposDocumentos);
+
+			Usuarios usuarios=new Usuarios();
+			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
+			usuarios.setUsuNombre(txtNombre.getValue().toString().trim());
+			usuarios.setUsuLogin(txtLogin.getValue().toString().trim());
+			usuarios.setUsuClave(txtClave.getValue().toString().trim());
+			TiposUsuarios tiposUsuarios=delegadoDeNegocio.consultarTiposUsuariosPorId(Long.parseLong(somTiposUsuarios.getValue().toString()));
+			usuarios.setTiposUsuarios(tiposUsuarios);
 			
-			delegadoDeNegocio.grabarClientes(clientes);
+			delegadoDeNegocio.grabarUsuarios(usuarios);
 			
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "El cliente se creo con exito", ""));
+			try {
+				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
+				this.setLosUsuarios(losUsuarios);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			this.limpiarAction();
+			
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se creó con exito", ""));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
 		}
 		return "";
 	}
-	public String modificarAction(){
+
+	public String modificarAction() {
 		log.info("Ingreso a modificar");
 		try {
-			Clientes clientes=new Clientes();
-			clientes.setCliDireccion(txtDireccion.getValue().toString().trim());
-			clientes.setCliId(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
-			clientes.setCliMail(txtMail.getValue().toString().trim());
-			clientes.setCliNombre(txtNombre.getValue().toString().trim());
-			clientes.setCliTelefono(txtTelefono.getValue().toString().trim());
-			TiposDocumentos tiposDocumentos=delegadoDeNegocio.consultarTipoDocumentoId(Long.parseLong(somTipoDocumento.getValue().toString()));
-			clientes.setTiposDocumentos(tiposDocumentos);
 			
-			delegadoDeNegocio.modificarClientes(clientes);
+			Usuarios usuarios=new Usuarios();
+			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
+			usuarios.setUsuNombre(txtNombre.getValue().toString().trim());
+			usuarios.setUsuLogin(txtLogin.getValue().toString().trim());
+			usuarios.setUsuClave(txtClave.getValue().toString().trim());
+			TiposUsuarios tiposUsuarios=delegadoDeNegocio.consultarTiposUsuariosPorId(Long.parseLong(somTiposUsuarios.getValue().toString()));
+			usuarios.setTiposUsuarios(tiposUsuarios);
 			
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "El cliente se modifico con exito", ""));
+			delegadoDeNegocio.modificarUsuarios(usuarios);
+			
+			try {
+				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
+				this.setLosUsuarios(losUsuarios);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			this.limpiarAction();
+			
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se modifico con exito", ""));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
 		}
 		return "";
 	}
-	public String borrarAction(){
+
+	public String borrarAction() {
 		log.info("Ingreso a borrar");
 		try {
-			Clientes clientes=new Clientes();
 			
-			clientes.setCliId(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
+			Usuarios usuarios=new Usuarios();
 			
-			delegadoDeNegocio.borrarClientes(clientes);
+			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
 			
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_INFO, "El cliente se elimino con exito", ""));
+			delegadoDeNegocio.borrarUsuarios(usuarios);
+			
+			try {
+				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
+				this.setLosUsuarios(losUsuarios);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			this.limpiarAction();
+			
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario se elimino con exito", ""));
 		} catch (Exception e) {
-			FacesContext.getCurrentInstance().addMessage("", new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
+			FacesContext.getCurrentInstance().addMessage("",
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
 		}
 		return "";
 	}
-	public String limpiarAction(){
-		log.info("Ingreso a limpiar");
-		txtDireccion.resetValue();
-		txtMail.resetValue();
-		txtNombre.resetValue();
-		txtTelefono.resetValue();
-		somTipoDocumento.setValue("-1");
-		txtIdentificacion.resetValue();
+
+	public String limpiarAction() {
 		
-		btnBorrar.setDisabled(true);
-		btnCrear.setDisabled(false);
-		btnModificar.setDisabled(true);
+		  log.info("Ingreso a limpiar");
+		  txtLogin.resetValue();
+		  txtClave.resetValue(); 
+		  txtNombre.resetValue();
+		  somTiposUsuarios.setValue("-1");
+		  txtIdentificacion.resetValue();
+		  
+		  btnBorrar.setDisabled(true); 
+		  btnCrear.setDisabled(true);
+		  btnModificar.setDisabled(true);
+		 
 		return "";
 	}
-	
-	
-	public void txtIdentificacionListener(){
-		Clientes entity=null;
-		
-		
+
+	public void txtIdentificacionListener() {
+		Usuarios entity = null;
+
 		try {
-			Long id=Long.parseLong(txtIdentificacion.getValue().toString().trim());
-			entity=delegadoDeNegocio.consultarClinetePorId(id);
+			Long id = Long.parseLong(txtIdentificacion.getValue().toString().trim());
+			entity = delegadoDeNegocio.consultarUsuariosPorId(id);
 		} catch (Exception e) {
 		}
-		
-		if(entity==null){
-			txtDireccion.resetValue();
-			txtMail.resetValue();
+
+		if (entity == null) {
+			txtLogin.resetValue();
 			txtNombre.resetValue();
-			txtTelefono.resetValue();
-			somTipoDocumento.setValue("-1");
-			
+			txtClave.resetValue();
+			somTiposUsuarios.setValue("-1");
+
 			btnBorrar.setDisabled(true);
 			btnCrear.setDisabled(false);
 			btnModificar.setDisabled(true);
-		}else{
-			
-			txtDireccion.setValue(entity.getCliDireccion());
-			txtMail.setValue(entity.getCliMail());
-			txtNombre.setValue(entity.getCliNombre());
-			txtTelefono.setValue(entity.getCliTelefono());
-			
-			somTipoDocumento.setValue(entity.getTiposDocumentos().getTdocCodigo());
-			
+		} else {
+
+			txtLogin.setValue(entity.getUsuLogin());
+			txtNombre.setValue(entity.getUsuNombre());
+			txtClave.setValue(entity.getUsuClave());
+
+			somTiposUsuarios.setValue(entity.getTiposUsuarios().getTusuCodigo());
+
 			btnBorrar.setDisabled(false);
 			btnCrear.setDisabled(true);
 			btnModificar.setDisabled(false);
-			
+
 		}
-		
+
 	}
-	
+
+	public IDelegadoDeNegocio getDelegadoDeNegocio() {
+		return delegadoDeNegocio;
+	}
+
+	public void setDelegadoDeNegocio(IDelegadoDeNegocio delegadoDeNegocio) {
+		this.delegadoDeNegocio = delegadoDeNegocio;
+	}
+
+	public List<Usuarios> getLosUsuarios() {
+		if (losUsuarios == null) {
+			try {
+				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return losUsuarios;
+	}
+
+	public void setLosUsuarios(List<Usuarios> losUsuarios) {
+		this.losUsuarios = losUsuarios;
+	}
+
+	public List<SelectItem> getLosTiposUsuariosItems() {
+		try {
+			if (losTiposUsuariosItems == null) {
+				losTiposUsuariosItems = new ArrayList<SelectItem>();
+				List<TiposUsuarios> losEntity = delegadoDeNegocio.consultarTodosTiposUsuarios();
+				for (TiposUsuarios tiposDocumentos : losEntity) {
+					losTiposUsuariosItems
+							.add(new SelectItem(tiposDocumentos.getTusuCodigo(), tiposDocumentos.getTusuNombre()));
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return losTiposUsuariosItems;
+	}
+
+	public void setLosTiposUsuariosItems(List<SelectItem> losTiposUsuariosItems) {
+		this.losTiposUsuariosItems = losTiposUsuariosItems;
+	}
 
 	public InputText getTxtIdentificacion() {
 		return txtIdentificacion;
@@ -163,6 +240,14 @@ public class UsuarioVista {
 
 	public void setTxtIdentificacion(InputText txtIdentificacion) {
 		this.txtIdentificacion = txtIdentificacion;
+	}
+
+	public InputText getTxtCodigo() {
+		return txtCodigo;
+	}
+
+	public void setTxtCodigo(InputText txtCodigo) {
+		this.txtCodigo = txtCodigo;
 	}
 
 	public InputText getTxtNombre() {
@@ -173,36 +258,28 @@ public class UsuarioVista {
 		this.txtNombre = txtNombre;
 	}
 
-	public InputText getTxtDireccion() {
-		return txtDireccion;
+	public InputText getTxtLogin() {
+		return txtLogin;
 	}
 
-	public void setTxtDireccion(InputText txtDireccion) {
-		this.txtDireccion = txtDireccion;
+	public void setTxtLogin(InputText txtLogin) {
+		this.txtLogin = txtLogin;
 	}
 
-	public InputText getTxtTelefono() {
-		return txtTelefono;
+	public InputText getTxtClave() {
+		return txtClave;
 	}
 
-	public void setTxtTelefono(InputText txtTelefono) {
-		this.txtTelefono = txtTelefono;
+	public void setTxtClave(InputText txtClave) {
+		this.txtClave = txtClave;
 	}
 
-	public InputText getTxtMail() {
-		return txtMail;
+	public SelectOneMenu getSomTiposUsuarios() {
+		return somTiposUsuarios;
 	}
 
-	public void setTxtMail(InputText txtMail) {
-		this.txtMail = txtMail;
-	}
-
-	public SelectOneMenu getSomTipoDocumento() {
-		return somTipoDocumento;
-	}
-
-	public void setSomTipoDocumento(SelectOneMenu somTipoDocumento) {
-		this.somTipoDocumento = somTipoDocumento;
+	public void setSomTiposUsuarios(SelectOneMenu somTiposUsuarios) {
+		this.somTiposUsuarios = somTiposUsuarios;
 	}
 
 	public CommandButton getBtnCrear() {
@@ -236,51 +313,5 @@ public class UsuarioVista {
 	public void setBtnLimpiar(CommandButton btnLimpiar) {
 		this.btnLimpiar = btnLimpiar;
 	}
-
-	public List<SelectItem> getLosTiposUsuariosItems() {
-		try {
-			if(losTiposUsuariosItems==null){
-				losTiposUsuariosItems=new ArrayList<SelectItem>();
-				List<TiposDocumentos> losEntity=delegadoDeNegocio.consultarTodosTiposDocumentos();
-				for (TiposDocumentos tiposDocumentos : losEntity) {
-					losTiposUsuariosItems.add(new SelectItem(tiposDocumentos.getTdocCodigo(), tiposDocumentos.getTdocNombre()));
-				}
-			}			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return losTiposUsuariosItems;
-	}
-
-	public void setLosTiposDocumentoItems(List<SelectItem> losTiposUsuariosItems) {
-		this.losTiposUsuariosItems = losTiposUsuariosItems;
-	}
-
-	public List<Usuarios> getLosUsuarios() {
-		if(losUsuarios==null){
-			try {
-				losUsuarios=delegadoDeNegocio.consultarTodosUsuarios();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-		return losUsuarios;
-	}
-
-	public void setLosClientes(List<Usuarios> losUsuarios) {
-		this.losUsuarios = losUsuarios;
-	}
-
-	public IDelegadoDeNegocio getDelegadoDeNegocio() {
-		return delegadoDeNegocio;
-	}
-
-	public void setDelegadoDeNegocio(IDelegadoDeNegocio delegadoDeNegocio) {
-		this.delegadoDeNegocio = delegadoDeNegocio;
-	}
-	
-	
-	
-	
 
 }

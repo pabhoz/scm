@@ -3,6 +3,7 @@ package co.edu.usbcali.demo.dao;
 import java.util.List;
 
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -39,6 +40,11 @@ public class UsuariosHibernateDAO implements IUsuariosDAO{
 	@Override
 	public List<Usuarios> consultarTodos() {
 		return sessionFactory.getCurrentSession().createCriteria(Usuarios.class).list();
+	}
+	
+	@Override
+	public List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) {
+		return sessionFactory.getCurrentSession().createCriteria(Usuarios.class).add(Restrictions.eq("tiposUsuarios.tusuCodigo", tusuCodigo)).list();
 	}
 	
 }

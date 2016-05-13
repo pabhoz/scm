@@ -55,5 +55,6 @@ public interface IDelegadoDeNegocio {
 	public void borrarUsuarios(Usuarios usuarios) throws Exception;
 	public Usuarios consultarUsuariosPorId(long id) throws Exception;
 	public List<Usuarios> consultarTodosUsuarios() throws Exception;
+	List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception;
 
 }
