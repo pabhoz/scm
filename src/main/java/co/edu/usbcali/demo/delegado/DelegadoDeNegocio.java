@@ -192,7 +192,12 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	public List<Retiros> consultarTodosRetiros() throws Exception {
 		return retirosLogica.consultarTodos();
 	}
-
+	
+	@Override
+	public int consultarUltimoRetiro() {
+		return retirosLogica.consultarUltimo();
+	}
+	
 	@Override
 	public void grabarTiposUsuarios(TiposUsuarios tiposUsuarios) throws Exception {
 		tiposUsuariosLogica.grabar(tiposUsuarios);
@@ -253,6 +258,8 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	public List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception {
 		return usuariosLogica.consultarUsuariosPorTiposUsuarios(tusuCodigo);
 	}
+
+	
 
 	
 

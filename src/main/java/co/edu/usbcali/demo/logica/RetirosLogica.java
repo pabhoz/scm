@@ -140,4 +140,10 @@ public class RetirosLogica implements IRetirosLogica {
 		return retirosDAO.consultarTodos();
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public int consultarUltimo() {
+		return retirosDAO.consultarUltimo();
+	}
+
 }

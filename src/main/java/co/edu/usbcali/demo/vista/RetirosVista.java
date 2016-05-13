@@ -1,5 +1,7 @@
 package co.edu.usbcali.demo.vista;
 
+import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -17,6 +19,8 @@ import org.slf4j.LoggerFactory;
 
 import co.edu.usbcali.demo.delegado.IDelegadoDeNegocio;
 import co.edu.usbcali.demo.modelo.Cuentas;
+import co.edu.usbcali.demo.modelo.Retiros;
+import co.edu.usbcali.demo.modelo.RetirosId;
 import co.edu.usbcali.demo.modelo.Usuarios;
 
 @ViewScoped
@@ -47,21 +51,28 @@ public class RetirosVista {
 	private CommandButton btnLimpiar;
 
 	public String retirarAction() {
-		log.info("Ingreso a crear");
+		log.info("Ingreso a retirar");
 
 		try {
-
-			try {
-				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
-				this.setLosUsuarios(losUsuarios);
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-
-			this.limpiarAction();
-
+			Retiros retiro = new Retiros();
+			
+			log.info("RetCod: "+delegadoDeNegocio.consultarUltimoRetiro());
+			Long retCod = delegadoDeNegocio.consultarUltimoRetiro()+1L; 
+			RetirosId id = new RetirosId(retCod,txtCuenta.getValue().toString());
+			retiro.setId(id);
+			
+			retiro.setRetFecha(new Date());
+			
+			BigDecimal valorRetiro = new BigDecimal(txtCantidad.getValue().toString());
+			retiro.setRetValor(valorRetiro);
+			
+			retiro.setRetDescripcion("Retiro Web");
+			
+			Usuarios usuario = delegadoDeNegocio.consultarUsuariosPorId(Long.parseLong(txtCedula.getValue().toString()));
+			retiro.setUsuarios(usuario);
+			
 			FacesContext.getCurrentInstance().addMessage("",
-					new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se creó con exito", ""));
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Retiro efectuado con exito", ""));
 		} catch (Exception e) {
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, e.getMessage(), ""));
@@ -159,7 +170,13 @@ public class RetirosVista {
 			txtTipoUsuario.resetValue();
 		} else {
 			//log.info(entity.getTiposUsuarios().getTusuNombre());
-			//txtTipoUsuario.setValue(entity.getTiposUsuarios().getTusuNombre());
+			try {
+				String tipo = delegadoDeNegocio.consultarTiposUsuariosPorId(entity.getTiposUsuarios().getTusuCodigo()).getTusuNombre();
+				txtTipoUsuario.setValue(tipo);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 
 	}

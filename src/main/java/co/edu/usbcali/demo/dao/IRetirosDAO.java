@@ -13,4 +13,5 @@ public interface IRetirosDAO {
 	public void borrar(Retiros retiros);
 	public Retiros consultarPorId(RetirosId retirosId);
 	public List<Retiros> consultarTodos();
+	int consultarUltimo();
 }

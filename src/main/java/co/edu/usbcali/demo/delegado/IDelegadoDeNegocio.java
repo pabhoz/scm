@@ -57,5 +57,6 @@ public interface IDelegadoDeNegocio {
 	public Usuarios consultarUsuariosPorId(long id) throws Exception;
 	public List<Usuarios> consultarTodosUsuarios() throws Exception;
 	List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception;
+	public int consultarUltimoRetiro();
 
 }

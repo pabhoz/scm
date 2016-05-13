@@ -2,7 +2,9 @@ package co.edu.usbcali.demo.dao;
 
 import java.util.List;
 
+import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Projections;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Repository;
@@ -40,6 +42,13 @@ public class RetirosHibernateDAO implements IRetirosDAO {
 	@Override
 	public List<Retiros> consultarTodos() {
 		return sessionFactory.getCurrentSession().createCriteria(Retiros.class).list();
+	}
+	
+	@Override
+	public int consultarUltimo() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RetirosId.class)
+			    .setProjection(Projections.max("retCodigo"));
+		return (int)criteria.uniqueResult();
 	}
 
 }
