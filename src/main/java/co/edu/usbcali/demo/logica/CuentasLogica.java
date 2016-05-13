@@ -115,5 +115,10 @@ public class CuentasLogica implements ICuentasLogica {
 		return cuentasDAO.consultarTodos();
 	}
 
+	@Override
+	public Cuentas consultarPorNumero(String numero) throws Exception {
+		return cuentasDAO.consultarPorNumero(numero);
+	}
+
 
 }

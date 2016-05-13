@@ -31,6 +31,7 @@ public interface IDelegadoDeNegocio {
 	public void borrarCuentas(Cuentas cuentas) throws Exception;
 	public Cuentas consultarCuentasPorId(String id) throws Exception;
 	public List<Cuentas> consultarTodosCuentas() throws Exception;
+	public Cuentas consultarCuentasPorNumero(String numero) throws Exception;
 
 	public void grabarRetiros(Retiros retiros) throws Exception;
 	public void modificarRetiros(Retiros retiros) throws Exception;

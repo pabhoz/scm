@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:growl id="msg" />
+		<p:panel header="Formulario de Retiros" id="pnlFormularioRetiro">
+			<h:panelGrid columns="2" border="0">
+
+				<p:outputLabel value="N° Cuenta" />
+				<p:inputText id="txtCuenta" binding="#{retirosVista.txtCuenta}" >
+					<p:ajax listener="#{retirosVista.txtCuentaListener}"
+						update="pnlFormularioRetiro" />
+				</p:inputText>
+
+				<p:outputLabel value="Cantidad Disponible"/>
+				<p:inputText id="txtDisponible" binding="#{retirosVista.txtDisponible}" disabled="true" />
+				
+				<p:outputLabel value="Cedula Usuario" />
+				<p:inputText id="txtCedula" binding="#{retirosVista.txtCedula}" >
+					<p:ajax listener="#{retirosVista.txtCedulaListener}"
+						update="pnlFormularioRetiro" />
+				</p:inputText>
+				
+				<p:outputLabel value="Tipo Usuario" />
+				<p:inputText id="txtTipoUsuarios" binding="#{retirosVista.txtTipoUsuario}" disabled="true" />
+				
+				<p:outputLabel value="Cantidad a retirar" />
+				<p:inputText id="txtCantidad" binding="#{retirosVista.txtCantidad}">
+					<p:ajax listener="#{retirosVista.txtCantidadListener}"
+						update="pnlFormularioRetiro" />
+				</p:inputText>
+				
+
+			</h:panelGrid>
+			<h:panelGrid columns="4" border="0">
+				<p:commandButton id="btnRetirar" value="Retirar" update="msg,pnlTodosLosRetiros"
+					binding="#{retirosVista.btnRetirar}" disabled="true"
+					action="#{retirosVista.connectAction}" />
+				<p:commandButton id="btnModificar" value="Modificar" update="msg"
+					binding="#{retirosVista.btnModificar}" disabled="true"
+					action="#{retirosVista.modificarAction}" />
+				<p:commandButton id="btnBorrar" value="Borrar" update="msg"
+					binding="#{retirosVista.btnBorrar}" disabled="true"
+					action="#{retirosVista.borrarAction}" />
+				<p:commandButton id="btnLimpiar" value="Limpiar"
+					update="pnlFormularioRetiro" binding="#{retirosVista.btnLimpiar}"
+					disabled="false" action="#{retirosVista.limpiarAction}" />
+			</h:panelGrid>
+		</p:panel>
+		<p:panel header="Usuarios" id="pnlTodosLosRetiros">
+			<p:dataTable var="usuario" value="#{retirosVista.losUsuarios}"
+				paginator="true" rows="5"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15,20">
+				<p:column headerText="Cedula" filterBy="#{usuario.usuCedula}">
+					<p:outputLabel value="#{usuario.usuCedula}" />
+				</p:column>
+				<p:column headerText="Nombre" filterBy="#{usuario.usuNombre}">
+					<p:outputLabel value="#{usuario.usuNombre}" />
+				</p:column>
+				<p:column headerText="Login" filterBy="#{usuario.usuLogin}">
+					<p:outputLabel value="#{usuario.usuLogin}" />
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+	</h:form>
+</h:body>
+</html>

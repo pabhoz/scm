@@ -9,6 +9,7 @@ public interface ICuentasDAO {
 	public void modificar(Cuentas cuentas);
 	public void borrar(Cuentas cuentas);
 	public Cuentas consultarPorId(String id);
+	public Cuentas consultarPorNumero(String numero);
 	public List<Cuentas> consultarTodos();
 	public List<Cuentas> consultarPorCliente(Long cliId);
 }

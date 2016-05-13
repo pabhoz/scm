@@ -159,6 +159,11 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	public List<Cuentas> consultarTodosCuentas() throws Exception {
 		return cuentasLogica.consultarTodos();
 	}
+	
+	@Override
+	public Cuentas consultarCuentasPorNumero(String numero) throws Exception {
+		return cuentasLogica.consultarPorNumero(numero);
+	}
 
 	@Override
 	public void grabarRetiros(Retiros retiros) throws Exception {
@@ -248,5 +253,7 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	public List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception {
 		return usuariosLogica.consultarUsuariosPorTiposUsuarios(tusuCodigo);
 	}
+
+	
 
 }

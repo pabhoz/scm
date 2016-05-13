@@ -1,6 +1,5 @@
 package co.edu.usbcali.demo.vista;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.application.FacesMessage;
@@ -12,20 +11,19 @@ import javax.faces.model.SelectItem;
 
 import org.primefaces.component.commandbutton.CommandButton;
 import org.primefaces.component.inputtext.InputText;
-import org.primefaces.component.password.Password;
 import org.primefaces.component.selectonemenu.SelectOneMenu;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import co.edu.usbcali.demo.delegado.IDelegadoDeNegocio;
-import co.edu.usbcali.demo.modelo.TiposUsuarios;
+import co.edu.usbcali.demo.modelo.Cuentas;
 import co.edu.usbcali.demo.modelo.Usuarios;
 
 @ViewScoped
 @ManagedBean
-public class UsuarioVista {
+public class RetirosVista {
 
-	private final static Logger log = LoggerFactory.getLogger(UsuarioVista.class);
+	private final static Logger log = LoggerFactory.getLogger(RetirosVista.class);
 
 	@ManagedProperty(value = "#{delegadoDeNegocio}")
 	private IDelegadoDeNegocio delegadoDeNegocio;
@@ -34,43 +32,34 @@ public class UsuarioVista {
 
 	private List<SelectItem> losTiposUsuariosItems;
 
-	private InputText txtIdentificacion;
-	private InputText txtCodigo;
-	private InputText txtNombre;
+	private InputText txtCantidad;
 	private InputText txtLogin;
-	private Password txtClave;
+	private InputText txtCuenta;
+	private InputText txtCedula;
+	private InputText txtDisponible;
+	private InputText txtTipoUsuario;
 
 	private SelectOneMenu somTiposUsuarios;
 
-	private CommandButton btnCrear;
+	private CommandButton btnRetirar;
 	private CommandButton btnModificar;
 	private CommandButton btnBorrar;
 	private CommandButton btnLimpiar;
 
-	public String crearAction() {
+	public String retirarAction() {
 		log.info("Ingreso a crear");
 
 		try {
 
-			Usuarios usuarios=new Usuarios();
-			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
-			usuarios.setUsuNombre(txtNombre.getValue().toString().trim());
-			usuarios.setUsuLogin(txtLogin.getValue().toString().trim());
-			usuarios.setUsuClave(txtClave.getValue().toString().trim());
-			TiposUsuarios tiposUsuarios=delegadoDeNegocio.consultarTiposUsuariosPorId(Long.parseLong(somTiposUsuarios.getValue().toString()));
-			usuarios.setTiposUsuarios(tiposUsuarios);
-			
-			delegadoDeNegocio.grabarUsuarios(usuarios);
-			
 			try {
 				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
 				this.setLosUsuarios(losUsuarios);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			this.limpiarAction();
-			
+
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se creó con exito", ""));
 		} catch (Exception e) {
@@ -83,26 +72,16 @@ public class UsuarioVista {
 	public String modificarAction() {
 		log.info("Ingreso a modificar");
 		try {
-			
-			Usuarios usuarios=new Usuarios();
-			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
-			usuarios.setUsuNombre(txtNombre.getValue().toString().trim());
-			usuarios.setUsuLogin(txtLogin.getValue().toString().trim());
-			usuarios.setUsuClave(txtClave.getValue().toString().trim());
-			TiposUsuarios tiposUsuarios=delegadoDeNegocio.consultarTiposUsuariosPorId(Long.parseLong(somTiposUsuarios.getValue().toString()));
-			usuarios.setTiposUsuarios(tiposUsuarios);
-			
-			delegadoDeNegocio.modificarUsuarios(usuarios);
-			
+
 			try {
 				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
 				this.setLosUsuarios(losUsuarios);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			this.limpiarAction();
-			
+
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "El usuario se modifico con exito", ""));
 		} catch (Exception e) {
@@ -115,22 +94,16 @@ public class UsuarioVista {
 	public String borrarAction() {
 		log.info("Ingreso a borrar");
 		try {
-			
-			Usuarios usuarios=new Usuarios();
-			
-			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
-			
-			delegadoDeNegocio.borrarUsuarios(usuarios);
-			
+
 			try {
 				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
 				this.setLosUsuarios(losUsuarios);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-			
+
 			this.limpiarAction();
-			
+
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "El Usuario se elimino con exito", ""));
 		} catch (Exception e) {
@@ -141,51 +114,63 @@ public class UsuarioVista {
 	}
 
 	public String limpiarAction() {
-		
-		  log.info("Ingreso a limpiar");
-		  txtLogin.resetValue();
-		  txtClave.resetValue(); 
-		  txtNombre.resetValue();
-		  somTiposUsuarios.setValue("-1");
-		  txtIdentificacion.resetValue();
-		  
-		  btnBorrar.setDisabled(true); 
-		  btnCrear.setDisabled(true);
-		  btnModificar.setDisabled(true);
-		 
+
+		log.info("Ingreso a limpiar");
+		txtLogin.resetValue();
+		somTiposUsuarios.setValue("-1");
+
+		btnBorrar.setDisabled(true);
+		btnModificar.setDisabled(true);
+
 		return "";
 	}
 
-	public void txtIdentificacionListener() {
+	public void txtCuentaListener() {
+
+		Cuentas entity = null;
+
+		try {
+			String numero = txtCuenta.getValue().toString().trim();
+			entity = delegadoDeNegocio.consultarCuentasPorId(numero);
+		} catch (Exception e) {
+		}
+
+		if (entity == null) {
+			txtCuenta.resetValue();
+			txtDisponible.resetValue();
+		} else {
+			txtDisponible.setValue(entity.getCueSaldo());
+		}
+
+	}
+
+	public void txtCedulaListener() {
+
 		Usuarios entity = null;
 
 		try {
-			Long id = Long.parseLong(txtIdentificacion.getValue().toString().trim());
+			Long id = Long.parseLong(txtCedula.getValue().toString().trim());
 			entity = delegadoDeNegocio.consultarUsuariosPorId(id);
 		} catch (Exception e) {
 		}
 
 		if (entity == null) {
-			txtLogin.resetValue();
-			txtNombre.resetValue();
-			txtClave.resetValue();
-			somTiposUsuarios.setValue("-1");
-
-			btnBorrar.setDisabled(true);
-			btnCrear.setDisabled(false);
-			btnModificar.setDisabled(true);
+			txtCedula.resetValue();
+			txtTipoUsuario.resetValue();
 		} else {
+			//log.info(entity.getTiposUsuarios().getTusuNombre());
+			//txtTipoUsuario.setValue(entity.getTiposUsuarios().getTusuNombre());
+		}
 
-			txtLogin.setValue(entity.getUsuLogin());
-			txtNombre.setValue(entity.getUsuNombre());
-			txtClave.setValue(entity.getUsuClave());
-			
-			somTiposUsuarios.setValue(entity.getTiposUsuarios().getTusuCodigo());
+	}
+	
+	public void txtCantidadListener() {
 
-			btnBorrar.setDisabled(false);
-			btnCrear.setDisabled(true);
-			btnModificar.setDisabled(false);
-
+		if( Double.parseDouble(txtDisponible.getValue().toString()) >=  Double.parseDouble(txtCantidad.getValue().toString())
+				&& txtTipoUsuario.getValue().toString() != null ){
+			btnRetirar.setDisabled(false);
+		}else{
+			btnRetirar.setDisabled(true);
 		}
 
 	}
@@ -199,13 +184,6 @@ public class UsuarioVista {
 	}
 
 	public List<Usuarios> getLosUsuarios() {
-		if (losUsuarios == null) {
-			try {
-				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
 		return losUsuarios;
 	}
 
@@ -214,47 +192,11 @@ public class UsuarioVista {
 	}
 
 	public List<SelectItem> getLosTiposUsuariosItems() {
-		try {
-			if (losTiposUsuariosItems == null) {
-				losTiposUsuariosItems = new ArrayList<SelectItem>();
-				List<TiposUsuarios> losEntity = delegadoDeNegocio.consultarTodosTiposUsuarios();
-				for (TiposUsuarios tiposDocumentos : losEntity) {
-					losTiposUsuariosItems
-							.add(new SelectItem(tiposDocumentos.getTusuCodigo(), tiposDocumentos.getTusuNombre()));
-				}
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return losTiposUsuariosItems;
 	}
 
 	public void setLosTiposUsuariosItems(List<SelectItem> losTiposUsuariosItems) {
 		this.losTiposUsuariosItems = losTiposUsuariosItems;
-	}
-
-	public InputText getTxtIdentificacion() {
-		return txtIdentificacion;
-	}
-
-	public void setTxtIdentificacion(InputText txtIdentificacion) {
-		this.txtIdentificacion = txtIdentificacion;
-	}
-
-	public InputText getTxtCodigo() {
-		return txtCodigo;
-	}
-
-	public void setTxtCodigo(InputText txtCodigo) {
-		this.txtCodigo = txtCodigo;
-	}
-
-	public InputText getTxtNombre() {
-		return txtNombre;
-	}
-
-	public void setTxtNombre(InputText txtNombre) {
-		this.txtNombre = txtNombre;
 	}
 
 	public InputText getTxtLogin() {
@@ -265,12 +207,20 @@ public class UsuarioVista {
 		this.txtLogin = txtLogin;
 	}
 
-	public Password getTxtClave() {
-		return txtClave;
+	public InputText getTxtCuenta() {
+		return txtCuenta;
 	}
 
-	public void setTxtClave(Password txtClave) {
-		this.txtClave = txtClave;
+	public void setTxtCuenta(InputText txtCuenta) {
+		this.txtCuenta = txtCuenta;
+	}
+
+	public InputText getTxtCedula() {
+		return txtCedula;
+	}
+
+	public void setTxtCedula(InputText txtCedula) {
+		this.txtCedula = txtCedula;
 	}
 
 	public SelectOneMenu getSomTiposUsuarios() {
@@ -281,12 +231,12 @@ public class UsuarioVista {
 		this.somTiposUsuarios = somTiposUsuarios;
 	}
 
-	public CommandButton getBtnCrear() {
-		return btnCrear;
+	public CommandButton getBtnRetirar() {
+		return btnRetirar;
 	}
 
-	public void setBtnCrear(CommandButton btnCrear) {
-		this.btnCrear = btnCrear;
+	public void setBtnRetirar(CommandButton btnRetirar) {
+		this.btnRetirar = btnRetirar;
 	}
 
 	public CommandButton getBtnModificar() {
@@ -311,6 +261,30 @@ public class UsuarioVista {
 
 	public void setBtnLimpiar(CommandButton btnLimpiar) {
 		this.btnLimpiar = btnLimpiar;
+	}
+
+	public InputText getTxtCantidad() {
+		return txtCantidad;
+	}
+
+	public void setTxtCantidad(InputText txtCantidad) {
+		this.txtCantidad = txtCantidad;
+	}
+
+	public InputText getTxtDisponible() {
+		return txtDisponible;
+	}
+
+	public void setTxtDisponible(InputText txtDisponible) {
+		this.txtDisponible = txtDisponible;
+	}
+
+	public InputText getTxtTipoUsuario() {
+		return txtTipoUsuario;
+	}
+
+	public void setTxtTipoUsuario(InputText txtTipoUsuario) {
+		this.txtTipoUsuario = txtTipoUsuario;
 	}
 
 }

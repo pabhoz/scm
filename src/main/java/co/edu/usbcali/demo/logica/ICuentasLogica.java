@@ -10,4 +10,5 @@ public interface ICuentasLogica {
 	public void borrar(Cuentas cuentas) throws Exception;
 	public Cuentas consultarPorId(String id) throws Exception;
 	public List<Cuentas> consultarTodos() throws Exception;
+	public Cuentas consultarPorNumero(String numero) throws Exception;
 }

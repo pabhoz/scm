@@ -47,4 +47,5 @@ public class UsuariosHibernateDAO implements IUsuariosDAO{
 		return sessionFactory.getCurrentSession().createCriteria(Usuarios.class).add(Restrictions.eq("tiposUsuarios.tusuCodigo", tusuCodigo)).list();
 	}
 	
+	
 }

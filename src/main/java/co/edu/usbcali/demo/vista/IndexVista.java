@@ -36,6 +36,16 @@ public class IndexVista {
 		log.info("Cargando vista de usuarios");
 		currentView = "./usuario.xhtml";
 	}
+	
+	public void loadConsignacionesView(){
+		log.info("Cargando vista de usuarios");
+		currentView = "./consignaciones.xhtml";
+	}
+	
+	public void loadRetirosView(){
+		log.info("Cargando vista de usuarios");
+		currentView = "./retiros.xhtml";
+	}
 
 	public String getCurrentView() {
 		return currentView;

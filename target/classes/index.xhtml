@@ -7,7 +7,7 @@
 
 </h:head>
 
-<h:body>
+<h:body onload="uiFix()">
 
 	<h:form>
 		<p:layout>
@@ -26,9 +26,11 @@
 
 					</p:submenu>
 					<p:submenu label="Transacciones">
-						<p:menuitem value="Consignaciones" url="./index.xhtml"
+						<p:menuitem value="Consignaciones" actionListener="#{indexVista.loadConsignacionesView}"
+							update="viewsWrapper"
 							icon="ui-icon-transferthick-e-w" />
-						<p:menuitem value="Retiros" url="./index.xhtml"
+						<p:menuitem value="Retiros" actionListener="#{indexVista.loadRetirosView}"
+							update="viewsWrapper"
 							icon="ui-icon-notice" />
 					</p:submenu>
 				</p:menu>
@@ -36,15 +38,27 @@
 
 			</p:layoutUnit>
 
-			<p:layoutUnit position="center" style="margin:0px !important;padding:0px !important;">
+			<p:layoutUnit id="dynamicContentWrapper" position="center" style="margin:0px !important;padding:0px !important;">
 				<p:panel id="viewsWrapper" style="margin:0px !important;padding:0px !important; border:none;">
 					<p:growl id="messages" showDetail="false" />
-					<iframe src="#{indexVista.currentView}" width="100%" height="100%"
-						style="border-width: 1PX;"> </iframe>
+					<iframe id="myIFrame" src="#{indexVista.currentView}"
+						style="border-width: 1PX;" width="100%" height="100%"> </iframe>
 				</p:panel>
 			</p:layoutUnit>
 		</p:layout>
 	</h:form>
-
+	<script>
+		function uiFix(){
+			/*var wrapper = document.querySelector("#j_idt4\\:dynamicContentWrapper");
+			var vW = document.querySelector("#j_idt4\\:viewsWrapper");
+			var iframe = document.querySelector("#myIFrame");
+			console.debug(wrapper);
+			console.debug(vW);
+			console.debug(iframe);
+			console.debug( window.innerHeight);
+			wrapper.height = vW.height = iframe.height = window.innerHeight;
+			*/
+		}
+	</script>
 </h:body>
 </html>

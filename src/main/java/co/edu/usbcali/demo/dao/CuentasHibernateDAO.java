@@ -36,6 +36,12 @@ public class CuentasHibernateDAO implements ICuentasDAO {
 	public Cuentas consultarPorId(String id) {
 		return sessionFactory.getCurrentSession().get(Cuentas.class, id);
 	}
+	
+
+	@Override
+	public Cuentas consultarPorNumero(String numero) {
+		return null;
+	}
 
 	@Override
 	public List<Cuentas> consultarTodos() {
