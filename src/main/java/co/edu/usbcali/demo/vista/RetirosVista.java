@@ -63,6 +63,9 @@ public class RetirosVista {
 			
 			retiro.setRetFecha(new Date());
 			
+			Cuentas cuenta = delegadoDeNegocio.consultarCuentasPorId(txtCuenta.getValue().toString());
+			retiro.setCuentas(cuenta);
+			
 			BigDecimal valorRetiro = new BigDecimal(txtCantidad.getValue().toString());
 			retiro.setRetValor(valorRetiro);
 			
@@ -70,6 +73,8 @@ public class RetirosVista {
 			
 			Usuarios usuario = delegadoDeNegocio.consultarUsuariosPorId(Long.parseLong(txtCedula.getValue().toString()));
 			retiro.setUsuarios(usuario);
+			
+			delegadoDeNegocio.grabarRetiros(retiro);
 			
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Retiro efectuado con exito", ""));

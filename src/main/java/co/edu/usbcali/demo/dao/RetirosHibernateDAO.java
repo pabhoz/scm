@@ -45,10 +45,10 @@ public class RetirosHibernateDAO implements IRetirosDAO {
 	}
 	
 	@Override
-	public int consultarUltimo() {
-		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(RetirosId.class)
-			    .setProjection(Projections.max("retCodigo"));
-		return (int)criteria.uniqueResult();
+	public Long consultarUltimo() {
+		Criteria criteria = sessionFactory.getCurrentSession().createCriteria(Retiros.class)
+			    .setProjection(Projections.max("id.retCodigo"));
+		return (Long)criteria.uniqueResult();
 	}
 
 }

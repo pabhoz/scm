@@ -13,5 +13,5 @@ public interface IRetirosLogica {
 	public void borrar(Retiros retiros) throws Exception;
 	public Retiros consultarPorId(RetirosId retirosId) throws Exception;
 	public List<Retiros> consultarTodos() throws Exception;
-	public int consultarUltimo();
+	public Long consultarUltimo();
 }

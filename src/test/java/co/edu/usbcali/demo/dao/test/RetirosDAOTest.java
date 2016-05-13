@@ -93,5 +93,13 @@ public class RetirosDAOTest {
 			log.info(retiros.getId().getRetCodigo() + " - " + retiros.getRetDescripcion() + " - " + retiros.getRetValor());
 		}
 	}
+	
+	@Test
+	@Transactional(readOnly=true)
+	public void fTest(){
+		Long last = retirosDAO.consultarUltimo();
+		log.info("Ultimo retiro: "+last);
+		assertTrue(last >= 0);
+	}
 
 }

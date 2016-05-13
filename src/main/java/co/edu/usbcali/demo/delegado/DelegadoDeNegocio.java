@@ -194,7 +194,7 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	}
 	
 	@Override
-	public int consultarUltimoRetiro() {
+	public Long consultarUltimoRetiro() {
 		return retirosLogica.consultarUltimo();
 	}
 	

@@ -142,7 +142,7 @@ public class RetirosLogica implements IRetirosLogica {
 
 	@Override
 	@Transactional(readOnly=true)
-	public int consultarUltimo() {
+	public Long consultarUltimo() {
 		return retirosDAO.consultarUltimo();
 	}
 
