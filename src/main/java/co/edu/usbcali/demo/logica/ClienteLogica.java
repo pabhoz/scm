@@ -118,7 +118,7 @@ public class ClienteLogica implements IClienteLogica {
 			throw new Exception("El cliente que desea eliminar no existe");
 		}
 		
-		clienteDAO.borrar(clientes);
+		clienteDAO.borrar(entity);
 	}
 
 	@Override

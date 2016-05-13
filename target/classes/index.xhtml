@@ -3,15 +3,48 @@
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:p="http://primefaces.org/ui">
 
-	<h:head>
+<h:head>
 
-	</h:head>
-	
-	<h:body>
-	
-		<p:editor/>
-		<br/>
-		<p:calendar/>
-		
-	</h:body>
+</h:head>
+
+<h:body>
+
+	<h:form>
+		<p:layout>
+			<p:layoutUnit position="west" resizable="true">
+
+				<p:menu>
+					<p:menuitem value="Inicio" url="./index.xhtml" icon="ui-icon-home" />
+					<p:submenu label="Catalogos">
+						<p:menuitem value="Clientes"
+							actionListener="#{indexVista.loadClientesView}"
+							update="viewsWrapper" icon="ui-icon-person" />
+						<p:menuitem value="Usuarios" actionListener="#{indexVista.loadUsuariosView}"
+							update="viewsWrapper"
+							icon="ui-icon-person" />
+
+
+					</p:submenu>
+					<p:submenu label="Transacciones">
+						<p:menuitem value="Consignaciones" url="./index.xhtml"
+							icon="ui-icon-transferthick-e-w" />
+						<p:menuitem value="Retiros" url="./index.xhtml"
+							icon="ui-icon-notice" />
+					</p:submenu>
+				</p:menu>
+
+
+			</p:layoutUnit>
+
+			<p:layoutUnit position="center" style="margin:0px !important;padding:0px !important;">
+				<p:panel id="viewsWrapper" style="margin:0px !important;padding:0px !important; border:none;">
+					<p:growl id="messages" showDetail="false" />
+					<iframe src="#{indexVista.currentView}" width="100%" height="100%"
+						style="border-width: 1PX;"> </iframe>
+				</p:panel>
+			</p:layoutUnit>
+		</p:layout>
+	</h:form>
+
+</h:body>
 </html>
