@@ -17,11 +17,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import co.edu.usbcali.demo.dao.UsuariosHibernateDAO;
 import co.edu.usbcali.demo.logica.ICuentasLogica;
 import co.edu.usbcali.demo.logica.IRetirosLogica;
 import co.edu.usbcali.demo.logica.IUsuariosLogica;
+import co.edu.usbcali.demo.modelo.Cuentas;
 import co.edu.usbcali.demo.modelo.Retiros;
 import co.edu.usbcali.demo.modelo.RetirosId;
+import co.edu.usbcali.demo.modelo.Usuarios;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration("/applicationContext.xml")
@@ -51,7 +54,7 @@ public class RetirosLogicaTest {
 		retiros.setId(new RetirosId(this.retirosID, this.cuentaNumero));
 		retiros.setRetDescripcion("Retiro de prueba");
 		retiros.setRetFecha(new Date());
-		retiros.setRetValor(new BigDecimal(99999));
+		retiros.setRetValor(new BigDecimal(1));
 		retiros.setUsuarios(usuarioLogica.consultarPorId(this.usuarioCedula));
 		
 		retirosLogica.grabar(retiros);
@@ -90,5 +93,23 @@ public class RetirosLogicaTest {
 			log.info(retiros.getCuentas().getCueNumero() + " - " + retiros.getRetDescripcion() + " - " + retiros.getRetValor());
 		}
 	}
+	
+	/*@Test
+	@Transactional(readOnly=false, propagation=Propagation.REQUIRED)
+	public void fTest() throws Exception {
+		Retiros retiros = new Retiros();
+		RetirosId id = new RetirosId(99L,"4008-5305-0010");
+		retiros.setId(id);
+		retiros.setRetDescripcion("Prueba de retiro");
+		retiros.setRetFecha(new Date());
+		retiros.setRetValor( new BigDecimal(10000001));
+		Usuarios usuarios = usuarioLogica.consultarPorId(10L);
+		retiros.setUsuarios(usuarios);
+		Cuentas cuentas = cuentasLogica.consultarPorId("4008-5305-0010");
+		retiros.setCuentas(cuentas);
+		
+		retirosLogica.grabar(retiros);
+		
+	}*/
 
 }

@@ -131,6 +131,11 @@ public class DelegadoDeNegocio implements IDelegadoDeNegocio {
 	public List<Consignaciones> consultarTodosConsignaciones() throws Exception {
 		return consignacionesLogica.consultarTodos();
 	}
+	
+	@Override
+	public Long consultarUltimaConsignacion() {
+		return consignacionesLogica.consultarUltima();
+	}
 
 	@Override
 	public void grabarCuentas(Cuentas cuentas) throws Exception {

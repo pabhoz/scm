@@ -38,13 +38,18 @@ public class IndexVista {
 	}
 	
 	public void loadConsignacionesView(){
-		log.info("Cargando vista de usuarios");
+		log.info("Cargando vista de consignaciones");
 		currentView = "./consignaciones.xhtml";
 	}
 	
 	public void loadRetirosView(){
-		log.info("Cargando vista de usuarios");
+		log.info("Cargando vista de retiros");
 		currentView = "./retiros.xhtml";
+	}
+	
+	public void loadTransaccionesView(){
+		log.info("Cargando vista de retiros y consignaciones");
+		currentView = "./transacciones.xhtml";
 	}
 
 	public String getCurrentView() {

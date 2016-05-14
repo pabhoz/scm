@@ -1,5 +1,6 @@
 package co.edu.usbcali.demo.logica;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -81,6 +82,10 @@ public class ConsignacionesLogica implements IConsignacionesLogica {
 		consignaciones.setUsuarios(usuarios);
 		consignaciones.setCuentas(cuentas);
 		
+		BigDecimal nuevoSaldo = cuentas.getCueSaldo().add(consignaciones.getConValor());
+		cuentas.setCueSaldo(nuevoSaldo);
+		cuentasLogica.modificar(cuentas);
+		
 		consignacionesDAO.grabar(consignaciones);
 	}
 
@@ -135,6 +140,12 @@ public class ConsignacionesLogica implements IConsignacionesLogica {
 	@Transactional(readOnly=true)
 	public List<Consignaciones> consultarTodos() throws Exception {
 		return consignacionesDAO.consultarTodos();
+	}
+	
+	@Override
+	@Transactional(readOnly=true)
+	public Long consultarUltima() {
+		return consignacionesDAO.consultarUltima();
 	}
 
 

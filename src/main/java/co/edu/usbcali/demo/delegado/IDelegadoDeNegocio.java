@@ -25,6 +25,7 @@ public interface IDelegadoDeNegocio {
 	public void borrarConsignaciones(Consignaciones consignaciones) throws Exception;
 	public Consignaciones consultarConsignacionesPorId(ConsignacionesId consignacionesId) throws Exception;
 	public List<Consignaciones> consultarTodosConsignaciones() throws Exception;
+	public Long consultarUltimaConsignacion();
 	
 	public void grabarCuentas(Cuentas cuentas) throws Exception;
 	public void modificarCuentas(Cuentas cuentas) throws Exception;
@@ -38,7 +39,8 @@ public interface IDelegadoDeNegocio {
 	public void borrarRetiros(Retiros retiros) throws Exception;
 	public Retiros consultarRetirosPorId(RetirosId retirosId) throws Exception;
 	public List<Retiros> consultarTodosRetiros() throws Exception;
-
+	public Long consultarUltimoRetiro();
+	
 	public void grabarTiposDocumentos(TiposDocumentos entity)throws  Exception;
 	public void modificarTiposDocumentos(TiposDocumentos entity)throws  Exception;
 	public void borrarTiposDocumentos(TiposDocumentos entity)throws  Exception;
@@ -57,6 +59,6 @@ public interface IDelegadoDeNegocio {
 	public Usuarios consultarUsuariosPorId(long id) throws Exception;
 	public List<Usuarios> consultarTodosUsuarios() throws Exception;
 	List<Usuarios> consultarUsuariosPorTiposUsuarios(Long tusuCodigo) throws Exception;
-	public Long consultarUltimoRetiro();
+	
 
 }

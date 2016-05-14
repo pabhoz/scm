@@ -12,4 +12,5 @@ public interface IConsignacionesDAO {
 	public void borrar(Consignaciones consignaciones);
 	public Consignaciones consultarPorId(ConsignacionesId consignacionesId);
 	public List<Consignaciones> consultarTodos();
+	Long consultarUltima();
 }

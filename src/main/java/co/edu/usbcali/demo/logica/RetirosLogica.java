@@ -1,5 +1,6 @@
 package co.edu.usbcali.demo.logica;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Set;
 
@@ -70,6 +71,14 @@ public class RetirosLogica implements IRetirosLogica {
 			throw new Exception("La cuenta no existe");
 		}
 		
+		if (cuentas.getCueActiva() == "N") {
+			throw new Exception("La cuenta no está activa");
+		}
+		
+		if ( retiros.getRetValor().compareTo(cuentas.getCueSaldo()) >= 0) {
+			throw new Exception("La cuenta no tiene suficiente saldo");
+		}
+		
 		if (retiros.getUsuarios() == null) {
 			throw new Exception("El usuario del retiro es obligatorio");
 		}
@@ -82,6 +91,9 @@ public class RetirosLogica implements IRetirosLogica {
 		retiros.setCuentas(cuentas);
 		retiros.setUsuarios(usuarios);
 		
+		BigDecimal nuevoSaldo = cuentas.getCueSaldo().subtract(retiros.getRetValor());
+		cuentas.setCueSaldo(nuevoSaldo);
+		cuentasLogica.modificar(cuentas);
 		retirosDAO.grabar(retiros);
 		
 	}
