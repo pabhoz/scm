@@ -97,6 +97,7 @@ public class UsuarioVista {
 			try {
 				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();
 				this.setLosUsuarios(losUsuarios);
+				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -121,6 +122,8 @@ public class UsuarioVista {
 			usuarios.setUsuCedula(Long.parseLong(txtIdentificacion.getValue().toString().trim()));
 			
 			delegadoDeNegocio.borrarUsuarios(usuarios);
+			
+			this.limpiarAction();
 			
 			try {
 				losUsuarios = delegadoDeNegocio.consultarTodosUsuarios();

@@ -1,9 +1,11 @@
 package co.edu.usbcali.demo.controlador;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import co.edu.usbcali.demo.delegado.IDelegadoDeNegocio;
 import co.edu.usbcali.demo.dto.ClienteDTO;
 import co.edu.usbcali.demo.modelo.Clientes;
+import co.edu.usbcali.demo.modelo.TiposDocumentos;
 
 @RestController
 @RequestMapping("/cliente")
@@ -40,15 +43,11 @@ public class ClienteRest {
 		return clienteDTO;
 	}
 	
-	@RequestMapping(value="/consularTodos/",method=RequestMethod.GET)
+	@RequestMapping(value="/consultarTodos",method=RequestMethod.GET)
 	public List<ClienteDTO> consultarTodos()throws Exception{
-		
 		List<Clientes> losClientes=delegadoDeNegocio.consultarTodosClientes();
-				
-		List<ClienteDTO> losClientesDTO = null;
-		
+		List<ClienteDTO> losClientesDTO=new ArrayList<ClienteDTO>(losClientes.size());
 		for (Clientes clientes : losClientes) {
-			
 			ClienteDTO clienteDTO=new ClienteDTO();
 			clienteDTO.setCliDireccion(clientes.getCliDireccion());
 			clienteDTO.setCliId(clientes.getCliId());
@@ -56,18 +55,74 @@ public class ClienteRest {
 			clienteDTO.setCliNombre(clientes.getCliNombre());
 			clienteDTO.setCliTelefono(clientes.getCliTelefono());
 			clienteDTO.setTdocCodigo(clientes.getTiposDocumentos().getTdocCodigo());
-			
 			losClientesDTO.add(clienteDTO);
 		}
-		
 		return losClientesDTO;
+		
 	}
 	
-	//public void grabar(Clientes clientes)throws Exception;
-	//public void modificar(Clientes clientes)throws Exception;
-	//public void borrar(Clientes clientes)throws Exception;
+	@RequestMapping(value="/grabar",method=RequestMethod.POST)
+	public void grabar(@RequestBody ClienteDTO clienteDTO)throws Exception{
+		
+		try {
+			Clientes clientes=new Clientes();
+			clientes.setCliDireccion(clienteDTO.getCliDireccion());
+			clientes.setCliId(clienteDTO.getCliId());
+			clientes.setCliMail(clienteDTO.getCliMail());
+			clientes.setCliNombre(clienteDTO.getCliNombre());
+			clientes.setCliTelefono(clienteDTO.getCliTelefono());
+			TiposDocumentos tiposDocumentos=delegadoDeNegocio.consultarTipoDocumentoId(clienteDTO.getTdocCodigo());
+			clientes.setTiposDocumentos(tiposDocumentos);
+			
+			delegadoDeNegocio.grabarClientes(clientes);
+			
+		} catch (Exception e) {
+			throw e;
+		}		
+	}
 	
-	//public List<Clientes> consultarTodos()throws Exception;
+	@RequestMapping(value="/modificar",method=RequestMethod.PUT)
+	public void modificar(@RequestBody ClienteDTO clienteDTO)throws Exception{
+		
+		try {
+			Clientes clientes=delegadoDeNegocio.consultarClinetePorId(clienteDTO.getCliId());
+			if(clientes==null){
+				throw new Exception("El cliente que desea modificar no existe");
+			}
+			clientes.setCliDireccion(clienteDTO.getCliDireccion());
+			clientes.setCliId(clienteDTO.getCliId());
+			clientes.setCliMail(clienteDTO.getCliMail());
+			clientes.setCliNombre(clienteDTO.getCliNombre());
+			clientes.setCliTelefono(clienteDTO.getCliTelefono());
+			TiposDocumentos tiposDocumentos=delegadoDeNegocio.consultarTipoDocumentoId(clienteDTO.getTdocCodigo());
+			clientes.setTiposDocumentos(tiposDocumentos);
+			
+			delegadoDeNegocio.modificarClientes(clientes);
+			
+		} catch (Exception e) {
+			throw e;
+		}		
+	}
+	
+	@RequestMapping(value="/borrar/{id}",method=RequestMethod.DELETE)
+	public void borrar(@PathVariable("id") long cliId)throws Exception{
+		
+		try {
+			Clientes clientes=delegadoDeNegocio.consultarClinetePorId(cliId);
+			if(clientes==null){
+				throw new Exception("El cliente que desea modificar no existe");
+			}
+			
+			delegadoDeNegocio.borrarClientes(clientes);
+			
+		} catch (Exception e) {
+			throw e;
+		}		
+	}
+	
+	
+	
+	
 	
 	
 

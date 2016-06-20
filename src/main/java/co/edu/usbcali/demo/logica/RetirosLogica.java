@@ -88,6 +88,10 @@ public class RetirosLogica implements IRetirosLogica {
 			throw new Exception("El usuario no existe");
 		}
 		
+		if (usuarios.getTiposUsuarios().getTusuCodigo() != 10){
+			throw new Exception("Solo los cajeros pueden retirar");
+		}
+		
 		retiros.setCuentas(cuentas);
 		retiros.setUsuarios(usuarios);
 		

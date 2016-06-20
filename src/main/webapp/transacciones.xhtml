@@ -29,10 +29,13 @@
 						update="pnlFormularioRetiro" />
 				</p:inputText>
 				
+				<p:outputLabel value="Usuario" />
+				<p:inputText id="txtUsuario" binding="#{transaccionesVista.txtUsuario}" disabled="true" />
+				
 				<p:outputLabel value="Tipo Usuario" />
 				<p:inputText id="txtTipoUsuarios" binding="#{transaccionesVista.txtTipoUsuario}" disabled="true" />
 				
-				<p:outputLabel value="Cantidad a retirar" />
+				<p:outputLabel value="Cantidad" />
 				<p:inputText id="txtCantidad" binding="#{transaccionesVista.txtCantidad}">
 					<p:ajax listener="#{transaccionesVista.txtCantidadListener}"
 						update="pnlFormularioRetiro" />
@@ -41,10 +44,10 @@
 
 			</h:panelGrid>
 			<h:panelGrid columns="4" border="0">
-				<p:commandButton id="btnRetirar" value="Retirar" update="msg"
+				<p:commandButton id="btnRetirar" value="Retirar" update="msg, pnlFormularioRetiro"
 					binding="#{transaccionesVista.btnRetirar}" disabled="true"
 					action="#{transaccionesVista.retirarAction}" />
-				<p:commandButton id="btnConsignar" value="Consignar" update="msg"
+				<p:commandButton id="btnConsignar" value="Consignar" update="msg, pnlFormularioRetiro"
 					binding="#{transaccionesVista.btnConsignar}" disabled="true"
 					action="#{transaccionesVista.consignarAction}" />
 				<p:commandButton id="btnLimpiar" value="Limpiar"

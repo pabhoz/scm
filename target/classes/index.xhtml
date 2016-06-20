@@ -7,10 +7,13 @@
 
 </h:head>
 
-<h:body onload="uiFix()">
+<h:body>
 
 	<h:form>
-		<p:layout>
+		<p:layout fullPage="true">
+			<p:layoutUnit position="north" size="100" resizable="true" >
+        <h:outputText value="United Indian Company Bank" style="text-align:center; font-size:200%;"/>
+    </p:layoutUnit>
 			<p:layoutUnit position="west" resizable="true">
 
 				<p:menu>
@@ -26,12 +29,7 @@
 
 					</p:submenu>
 					<p:submenu label="Transacciones">
-						<p:menuitem value="Consignaciones" actionListener="#{indexVista.loadConsignacionesView}"
-							update="viewsWrapper"
-							icon="ui-icon-transferthick-e-w" />
-						<p:menuitem value="Retiros" actionListener="#{indexVista.loadRetirosView}"
-							update="viewsWrapper"
-							icon="ui-icon-notice" />
+						
 							<p:menuitem value="Retiros y Consignaciones" actionListener="#{indexVista.loadTransaccionesView}"
 							update="viewsWrapper" />
 					</p:submenu>
@@ -44,23 +42,13 @@
 				<p:panel id="viewsWrapper" style="margin:0px !important;padding:0px !important; border:none;">
 					<p:growl id="messages" showDetail="false" />
 					<iframe id="myIFrame" src="#{indexVista.currentView}"
-						style="border-width: 1PX;" width="100%" height="100%"> </iframe>
+						style="border-width: 0PX;" width="100%" height="100%" > </iframe>
 				</p:panel>
 			</p:layoutUnit>
 		</p:layout>
 	</h:form>
 	<script>
-		function uiFix(){
-			/*var wrapper = document.querySelector("#j_idt4\\:dynamicContentWrapper");
-			var vW = document.querySelector("#j_idt4\\:viewsWrapper");
-			var iframe = document.querySelector("#myIFrame");
-			console.debug(wrapper);
-			console.debug(vW);
-			console.debug(iframe);
-			console.debug( window.innerHeight);
-			wrapper.height = vW.height = iframe.height = window.innerHeight;
-			*/
-		}
+		
 	</script>
 </h:body>
 </html>

@@ -79,6 +79,10 @@ public class ConsignacionesLogica implements IConsignacionesLogica {
 			throw new Exception("La cuenta no existe");
 		}
 		
+		if (usuarios.getTiposUsuarios().getTusuCodigo() != 10){
+			throw new Exception("Solo los cajeros pueden consignar");
+		}
+		
 		consignaciones.setUsuarios(usuarios);
 		consignaciones.setCuentas(cuentas);
 		

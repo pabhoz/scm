@@ -13,7 +13,7 @@ import co.edu.usbcali.demo.delegado.IDelegadoDeNegocio;
 @ManagedBean
 public class IndexVista {
 	
-	private String currentView = "";
+	private String currentView = "./logo.xhtml";
 	private final static Logger log = LoggerFactory.getLogger(IndexVista.class);
 	
 	@ManagedProperty(value="#{delegadoDeNegocio}")

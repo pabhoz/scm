@@ -44,6 +44,7 @@ public class transaccionesVista {
 	private InputText txtCedula;
 	private InputText txtDisponible;
 	private InputText txtTipoUsuario;
+	private InputText txtUsuario;
 
 	private SelectOneMenu somTiposUsuarios;
 
@@ -77,7 +78,9 @@ public class transaccionesVista {
 			retiro.setUsuarios(usuario);
 
 			delegadoDeNegocio.grabarRetiros(retiro);
-
+				
+			this.limpiarAction();
+			
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Retiro efectuado con exito", ""));
 		} catch (Exception e) {
@@ -108,6 +111,7 @@ public class transaccionesVista {
 			
 			delegadoDeNegocio.grabarConsignaciones(consignacion);
 			
+			this.limpiarAction();
 			
 			FacesContext.getCurrentInstance().addMessage("",
 					new FacesMessage(FacesMessage.SEVERITY_INFO, "Consignación realizada con exito", ""));
@@ -121,8 +125,12 @@ public class transaccionesVista {
 	public String limpiarAction() {
 
 		log.info("Ingreso a limpiar");
-		txtLogin.resetValue();
-		somTiposUsuarios.setValue("-1");
+		txtCuenta.resetValue();
+		txtCantidad.resetValue();
+		txtDisponible.resetValue();
+		txtCedula.resetValue();
+		txtTipoUsuario.resetValue();
+		txtUsuario.resetValue();
 
 		return "";
 	}
@@ -161,6 +169,7 @@ public class transaccionesVista {
 			txtTipoUsuario.resetValue();
 		} else {
 			btnConsignar.setDisabled(false);
+			txtUsuario.setValue(entity.getUsuNombre());
 			try {
 				String tipo = delegadoDeNegocio.consultarTiposUsuariosPorId(entity.getTiposUsuarios().getTusuCodigo())
 						.getTusuNombre();
@@ -287,4 +296,14 @@ public class transaccionesVista {
 	public void setBtnConsignar(CommandButton btnConsignar) {
 		this.btnConsignar = btnConsignar;
 	}
+
+	public InputText getTxtUsuario() {
+		return txtUsuario;
+	}
+
+	public void setTxtUsuario(InputText txtUsuario) {
+		this.txtUsuario = txtUsuario;
+	}
+	
+	
 }
