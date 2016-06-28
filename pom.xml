@@ -10,13 +10,14 @@
    <repository>
      <id>Nexus</id>
      <name>SCM Releases</name>
-     <url>http://localhost:8081/repository/maven-scm/</url>
+     <url>http://52.26.61.34:8081/nexus/content/repositories/Nexus/</url>
    </repository>
 <snapshotRepository>
-     <id>Nexus</id>
+     <id>NexusSS</id>
      <name>Nexus Snapshots</name>
-     <url>http://localhost:8081/repository/maven-scm-ss/</url>
+     <url>http://52.26.61.34:8081/nexus/content/repositories/NexusSS/</url>
    </snapshotRepository>
+
 </distributionManagement>
 
 
