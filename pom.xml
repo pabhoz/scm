@@ -8,16 +8,13 @@
 
 	<distributionManagement>
    <repository>
-     <id>Nexus</id>
-     <name>SCM Releases</name>
-     <url>http://52.26.61.34:8081/nexus/content/repositories/Nexus/</url>
+     <id>releases</id>
+     <url>http://localhost:8081/nexus/content/repositories/releases/</url>
    </repository>
 <snapshotRepository>
-     <id>NexusSS</id>
-     <name>Nexus Snapshots</name>
-     <url>http://52.26.61.34:8081/nexus/content/repositories/NexusSS/</url>
+     <id>snapshots</id>
+     <url>http://localhost:8081/nexus/content/repositories/snapshots/</url>
    </snapshotRepository>
-
 </distributionManagement>
 
 
