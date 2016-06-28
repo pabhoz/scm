@@ -15,34 +15,34 @@ public class OperacionesMatematicasTest {
 
 	@Test
 	public void aTest() {
-		RestTemplate restTemplate = new RestTemplate();
+		/*RestTemplate restTemplate = new RestTemplate();
 		Resultado resultado=restTemplate.getForObject("http://localhost:8080/demoWeb/controlador/operacionesMatematicas/sumar/4/100", Resultado.class);
 		assertNotNull("El resultado es null", resultado);
-		log.info(""+resultado.getValor());
+		log.info(""+resultado.getValor());*/
 	}
 	
 	@Test
 	public void bTest() {
-		RestTemplate restTemplate = new RestTemplate();
+		/*RestTemplate restTemplate = new RestTemplate();
 		Resultado resultado=restTemplate.getForObject("http://localhost:8080/demoWeb/controlador/operacionesMatematicas/restar/4/100", Resultado.class);
 		assertNotNull("El resultado es null", resultado);
-		log.info(""+resultado.getValor());
+		log.info(""+resultado.getValor());*/
 	}
 	
 	@Test
 	public void cTest() {
-		RestTemplate restTemplate = new RestTemplate();
+		/*RestTemplate restTemplate = new RestTemplate();
 		Resultado resultado=restTemplate.getForObject("http://localhost:8080/demoWeb/controlador/operacionesMatematicas/multiplicar/4/100", Resultado.class);
 		assertNotNull("El resultado es null", resultado);
-		log.info(""+resultado.getValor());
+		log.info(""+resultado.getValor());*/
 	}
 	
 	@Test
 	public void dTest() {
-		RestTemplate restTemplate = new RestTemplate();
+		/*RestTemplate restTemplate = new RestTemplate();
 		Resultado resultado=restTemplate.getForObject("http://localhost:8080/demoWeb/controlador/operacionesMatematicas/dividir/4/100", Resultado.class);
 		assertNotNull("El resultado es null", resultado);
-		log.info(""+resultado.getValor());
+		log.info(""+resultado.getValor());*/
 	}
 
 }
