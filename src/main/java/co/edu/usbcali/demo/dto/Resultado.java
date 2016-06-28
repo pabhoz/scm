@@ -2,14 +2,14 @@ package co.edu.usbcali.demo.dto;
 
 public class Resultado {
 	
-	private Integer valor;
+	private Integer respuesta;
 
-	public Integer getValor() {
-		return valor;
+	public Integer getRespuesta() {
+		return respuesta;
 	}
 
-	public void setValor(Integer valor) {
-		this.valor = valor;
+	public void setRespuesta(Integer r) {
+		this.respuesta = r;
 	}
 	
 	
