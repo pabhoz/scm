@@ -166,7 +166,7 @@
 				<groupId>org.apache.tomcat.maven</groupId>
 				<artifactId>tomcat7-maven-plugin</artifactId> 
 				<version>2.2</version> 
-				<configuration> <url>http:// localhost:8080/manager/text</url> 
+				<configuration> <url>http://localhost:8080/manager/text</url> 
 				<server>deployment</server>  
 				<username>deployment</username>
 				<password>deployment123</password>
